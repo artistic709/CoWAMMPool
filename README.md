@@ -1,66 +1,21 @@
-## Foundry
+## Pooled CoW AMM demo on Gnosis Chain
 
-**Foundry is a blazing fast, portable and modular toolkit for Ethereum application development written in Rust.**
+CoWSwap <> Safe <> LP contract
 
-Foundry consists of:
+### Contracts address
 
--   **Forge**: Ethereum testing framework (like Truffle, Hardhat and DappTools).
--   **Cast**: Swiss army knife for interacting with EVM smart contracts, sending transactions and getting chain data.
--   **Anvil**: Local Ethereum node, akin to Ganache, Hardhat Network.
--   **Chisel**: Fast, utilitarian, and verbose solidity REPL.
+WXDAI 0xe91D153E0b41518A2Ce8Dd3D7944Fa863463a97d
+WETH 0x6A023CCd1ff6F2045C3309768eAd9E68F978f6e1
+SAFE 0xbc6159Fd429be18206e60b3BB01D7289F905511B
+CoWAMMPool 0xf34e100057e982f9Dc3C5dE30e756080C50e9726
 
-## Documentation
+### Deploy flow
+1. create a Safe contract
+2. deploy CoWAMMPool contract
+3. Safe approve CoWAMMPool to move tokens
+4. fund initial liquidity by invoking CoWAMMPool.addLiquidity
+5. use CoW AMM Deployer Safe App
 
-https://book.getfoundry.sh/
-
-## Usage
-
-### Build
-
-```shell
-$ forge build
-```
-
-### Test
-
-```shell
-$ forge test
-```
-
-### Format
-
-```shell
-$ forge fmt
-```
-
-### Gas Snapshots
-
-```shell
-$ forge snapshot
-```
-
-### Anvil
-
-```shell
-$ anvil
-```
-
-### Deploy
-
-```shell
-$ forge script script/Counter.s.sol:CounterScript --rpc-url <your_rpc_url> --private-key <your_private_key>
-```
-
-### Cast
-
-```shell
-$ cast <subcommand>
-```
-
-### Help
-
-```shell
-$ forge --help
-$ anvil --help
-$ cast --help
-```
+### ⚠️ **Disclaimer**
+- not audited
+- currently Safe owner is my EOA
