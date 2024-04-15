@@ -14,6 +14,7 @@ contract CoWAMMPool is ERC20 {
     address public token0;
     address public token1;
     address public safe;
+    uint256 public kLast;
 
     constructor(
         string memory _name,
@@ -29,6 +30,14 @@ contract CoWAMMPool is ERC20 {
         safe = _safe;
     }
 
+    function sync() external returns (uint256) {
+        require(msg.sender == safe, "FORBIDDEN");
+        uint256 balance0 = ERC20(token0).balanceOf(safe);
+        uint256 balance1 = ERC20(token1).balanceOf(safe);
+        kLast = (balance0 * balance1).sqrt();
+        return kLast;
+    }
+
     function addLiquidity(uint256 amount0, uint256 amount1, uint256 minAmountLP) external returns (uint256 amountLP) {
         require(amount0 > 0 || amount1 > 0, "INVALID_AMOUNTS");
 
@@ -38,13 +47,16 @@ contract CoWAMMPool is ERC20 {
         uint256 kBefore = (balance0 * balance1).sqrt();
         uint256 kAfter = ((balance0 + amount0) * (balance1 + amount1)).sqrt();
 
+        require(kBefore >= kLast, "K");
+        kLast = kAfter;
+
         if (totalSupplyStored == 0) {
             amountLP = kAfter - 1000;
             _mint(msg.sender, amountLP);
             _mint(address(0), 1000);
         } else {
             amountLP = (kAfter - kBefore) * totalSupplyStored / kBefore;
-            require(amountLP >= minAmountLP, "INSUFFICIENT_LIQUIDITY");
+            require(amountLP >= minAmountLP, "SLIPPAGE");
             _mint(msg.sender, amountLP);
         }
 
@@ -61,6 +73,8 @@ contract CoWAMMPool is ERC20 {
         amount0 = amountLP * balance0 / totalSupplyStored;
         amount1 = amountLP * balance1 / totalSupplyStored;
         require(amount0 >= minAmount0 && amount1 >= minAmount1, "INSUFFICIENT_AMOUNTS");
+
+        kLast = ((balance0 - amount0) * (balance1 - amount1)).sqrt();
 
         _burn(msg.sender, amountLP);
         token0.safeTransferFrom(safe, msg.sender, amount0);
