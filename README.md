@@ -2,6 +2,9 @@
 
 CoWSwap <> Safe <> LP contract
 
+### Demo
+[Frontend Demo](https://cow-amm-pool-interface.netlify.app)
+
 ### Contracts address
 
 - WXDAI: [0xe91D153E0b41518A2Ce8Dd3D7944Fa863463a97d](https://gnosisscan.io/address/0xe91d153e0b41518a2ce8dd3d7944fa863463a97d)
@@ -26,4 +29,5 @@ CoWSwap <> Safe <> LP contract
 - imbalanced deposit is allowed
 - no fee
 - still need to rely on Safe owner to configure CoW AMM
-- UI work in progress
+- add/remove liquidity via CoW Swap (intent: spend m token0 for n LP)
+- auto adjust CoW AMM minimum amount
