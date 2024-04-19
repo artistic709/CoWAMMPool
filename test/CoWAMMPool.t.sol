@@ -69,6 +69,15 @@ contract CoWAMMPoolTest is TestUtils {
         assertEq(ERC20(token1).balanceOf(address(safe)), 300e18);
     }
 
+    function testAddLiquidityAttemptToManipulateK() public {
+        pool.addLiquidity(100e18, 100e18, 100e18-1000);
+        address solver = _nameToAddr("Solver");
+        vm.prank(safe);
+        ERC20(token0).transfer(solver, 50e18);
+        vm.expectRevert();
+        pool.addLiquidity(100e18, 100e18, 100e18);
+    }
+
     function testRemoveLiquidity() public {
         pool.addLiquidity(100e18, 100e18, 0);
         pool.removeLiquidity(50e18, 0, 0);
