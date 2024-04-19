@@ -5,6 +5,8 @@ CoWSwap <> Safe <> LP contract
 ### Demo
 [Frontend Demo](https://cow-amm-pool-interface.netlify.app)
 
+![cowammpool.jpg](https://github.com/artistic709/CoWAMMPool/assets/6032476/ff5e7c95-1ca5-4b58-a7b7-b3fcabe2304a)
+
 ### Contracts address
 
 - WXDAI: [0xe91D153E0b41518A2Ce8Dd3D7944Fa863463a97d](https://gnosisscan.io/address/0xe91d153e0b41518a2ce8dd3d7944fa863463a97d)
